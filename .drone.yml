@@ -60,6 +60,8 @@ steps:
   environment:
     GIT_SUDO:
       from_secret: git_sudo
+    WEBDAV_PASSWORD:
+      from_secret: WEBDAV_PASSWORD
 
 node:
   machine: builder
