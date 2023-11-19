@@ -7,4 +7,4 @@ build: gradle.properties
 	podman run -it -v $(shell pwd):/project -v /tmp/gradlecache:"/root/.gradle" mingc/android-build-box bash -c 'cd /project; bash ./gradlew build'
 
 publish: build
-	tree
+	find . -name '*.apk'
