@@ -82,12 +82,15 @@ clone:
   disable: true
 
 steps:
+- name: clone
+  commands:
+  - git clone $DRONE_GIT_SSH_URL
 - name: publish
   commands:
-  - rm -fr /var/lib/fdroid/unsigned/*
-  - mv /var/storage/wastebox/Backups/app-release-unsigned.apk /var/lib/fdroid/unsigned/yetzio.yetcalc_$(date +%s).apk
-  - touch /var/lib/fdroid/metadata/yetzio.yetcalc.yml
-  - cd /var/lib/fdroid && /opt/fdroidserver/fdroid publish --verbose && /opt/fdroidserver/fdroid update --verbose
+  - cd $DRONE_REPO_NAME && echo $GIT_SUDO | sudo -S make publish
+  environment:
+    GIT_SUDO:
+      from_secret: git_sudo
 - name: report
   commands:
   - /usr/local/bin/telegram.run
